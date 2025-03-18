@@ -1,0 +1,154 @@
+Albacete:Tarancón:176.1
+Albacete:Almansa:57.257000
+Adanero:San Rafael:39.312
+Adanero:Benavente:39.312
+Ágreda:Soria:36.500
+Alcalá de Henares:Guadalajara:31.348
+Alcantarilla:Callosa del Segura:32.417
+Alcantarilla:Cieza:36.059
+Alcantarilla:Totana:24.863
+Alcañiz:Híjar:25.540
+Alcañiz:Reus:85.929
+Alcolea del Pinar:Molina de Aragón:55.595
+Alcoy:Sant Joan d'Alacant:27.778
+Alfaro:Ágreda:35.553
+Alfaro:Tafalla:29.200
+Algeciras:Tarifa:15.520
+Almansa:Xàtiva:64
+Almadrones:Alcolea del Pinar:29.563
+Almería:Adra:41.808
+Alzira:Silla:25.204
+Alzira:Xàtiva:21.258
+Amposta:Vinarós:26.842
+Aranjuez:Madrid:34.704
+Aranjuez:Ocaña:15.792
+Arévalo:Adanero:19.479
+Arganda del Rey:Tarancón:37.876
+Armiñón:Miranda del Ebro:17.026
+Astorga:La Bañeza:28.796
+Astorga:Ponferrada:33.612
+Astorga:Ponferrada:33.612000
+Baamonde:Becerrea:50.597
+Baamonde:Betanzos:28.084
+Badajoz:Mérida:50.174
+Barcelona:Mataró:19.642
+Basauri:Armiñón:49.661
+Basauri:Bilbao:7.445
+Béjar:Salamanca:43.897
+Benavente:Astorga:70
+Benicarló:Vinarós:8.513
+Benicàssim:Castelló de la Plana:7.300
+Benicàssim:Torreblanca:15.520
+Betanzos:A Coruña:23.542
+Burgo de Osma:Soria:48.357
+Burgos:Lerma:32.120
+Cáceres:Plasencia:63.657
+Castelldefels:Barcelona:19.036
+Castelldefels:Barcelona:19.036000
+Castelldefels:Sitges:23.965833
+Castelló de la Plana:Sagunt:52
+Castelló de la Plana:Vinarós:80
+Ciudad Real:Puertollano:28.348
+Cocentaina:Alcoy:7.445
+Collado Villalba:Madrid:29.200
+Córdoba:Montoro:29.563
+Córdoba:Sevilla:106.325000
+Cuenca:Cañete:48.379000
+Dos Hermanas:Jerez de la Frontera:60.197
+El Burgo del Ebro:Zaragoza:18.353333
+Elx:Alacant:14.673
+Elx:Callosa del Segura:24.115556
+Estepona:Guadiaro:28.377778
+Fuengirola:Marbella:14.600000
+Fuengirola:Torremolinos:16.518
+Guadalajara:Almadrones:26.321000
+Guadiaro:Algeciras:21.764444
+Hellín:Albacete:57.257
+Hellín:Cieza:23.085000
+Híjar:El Burgo del Ebro:50.680000
+Jabugo:Valverde del Camino:35.688889
+Jerez de la Frontera:Puerto Real:24.387778
+La Albuera:Badajoz:22.806
+La Albuera:Jabugo:82.733333
+La Bañeza:Benavente:36.059
+La Roda:Albacete:27.547000
+Lerma:Aranda de Duero:36.964
+L'Hospitalet de l'Infant:Amposta:37.394
+Liria:Valencia:29.200
+Lorca:Puerto Lumbreras:12.389
+Lorca:Totana:15.304444
+Losa del Obispo:Cañete:49.640
+Losa del Obispo:Liria:26.321000
+Los Gallardos:Almería:58.927
+Los Gallardos:Vera:13.765556
+Madrid:Adanero:110
+Madrid:Alcalá de Henares:24.948
+Madrid:Arganda del Rey:26.321
+Madrid:Maqueda:59.592000
+Albacete:Tarancón:88.4
+Madrid:Toledo:56.186
+Madrid:Venturada:36.529000
+Málaga:Torremolinos:10.260000
+Maqueda:Talavera de la Reina:35.101000
+Marbella:Estepona:28.331111
+Mataró:Girona:54.315
+Medina del Campo:Arévalo:24.777
+Medina del Campo:Tordesillas:23.767000
+Mérida:Badajoz:50.174000
+Mérida:Cáceres:64.970000
+Miranda del Ebro:Armiñón:17.026000
+Miranda del Ebro:Burgos:50.618
+Monreal del Campo:Molina de Aragón:31.517
+Montalbán:Alcañiz:57.850
+Montalbán:Monreal del Campo:35.282
+Motril:Adra:36.529
+Motril:Almuñecar:19.203
+Murcia:Alcantarilla:10.324
+Navalmoral de la Mata:Talavera de la Reina:53.065
+Nules:Sagunt:31.995556
+Nules:Vila-real:6.529
+Ocaña:Villarrobledo:88.242000
+Peñíscola:Benicarló:5.840
+Peñíscola:Torreblanca:10.387778
+Plasencia:Béjar:39.176
+Ponferrada:Becerrea:49.079
+Ponteareas:Ribadavia:49.079
+Puertollano:Montoro:72.502000
+Puerto Lumbreras:Vera:29.090
+Puerto Real:Cádiz:14.673
+Reus:Alcañiz:71.607500
+Reus:Tarragona:18.059000
+Ribadavia:Vigo:68
+Riaza:San Esteban de Gormaz:32.417000
+Riaza:Venturada:52.924
+Rincón de la Victorio:Almuñecar:40.906
+Rincón de la Victorio:Málaga:21.151111
+San Esteban de Gormaz:Burgo de Osma:13.461
+San Fernando:Cádiz:10.324
+San Fernando:Chiclana de la Frontera:11.403
+San Rafael:Collado Villalba:17.822
+Sant Joan d'Alacant:Alacant:6.529
+Sevilla:Dos Hermanas:13.774
+Sevilla:Huelva:76.605
+Sitges:Castelldefels:28.759000
+Sitges:Tarragona:28.684
+Tafalla:Pamplona:26.321
+Tarancón:Cuenca:55.499
+Tarancón:Madrid:86
+Tarifa:Chiclana de la Frontera:46.468
+Tarragona:L'Hospitalet de l'Infant:24.299
+Tarragona:Reus:15.049167
+Tarragona:Sitges:28.684000
+Toledo:Ciudad Real:85.294
+Tordesillas:Benavente:67.176
+Trujillo:Mérida:70.957
+Trujillo:Navalmoral de la Mata:41.321
+Valencia:Sagunt:21.056
+Valencia:Silla:11.119
+Valverde del Camino:Huelva:33.612
+Venturada:Aranda de Duero:87.612
+Vila-real:Castelló de la Plana:9.234
+Villarrobledo:La Roda:37.223000
+Xàtiva:Cocentaina:23.542
+Xàtiva:Silla:50
+Zamora:Salamanca:68.306667
