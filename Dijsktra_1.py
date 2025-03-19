@@ -529,20 +529,44 @@ def dijkstra1(origen,destino):
     nodosVisitados = set([])
     aristasVisitadas = set([])
     camino = []
-      
+
+    #Inicializcion (ESTO ES LO QUE HE PUESTO YO)
+    for v in ciudades:
+        D[v] = float('inf')
+    
+
     S.add(origen)
     D[origen] = 0
     ultimo = origen
 
+
+
     while ultimo!=destino:            
     # Extrae los nuevos candidatos
         busca = [v for (u,v) in edges if u==ultimo]
+        
+        for v in busca: #Por cada nodo que se puede llegar desde este
+            if v not in S: #Si no lo hemos visitado ya
+                Q.add(v) #Es un candidato
+                if D[ultimo] + dist[ultimo,v] < D[v]: #Si su distancia con el ultimo + el ultimo con el primero es mas corta que su distancia
+                    D[v] = D[ultimo] + dist[ultimo,v]
+                    P[v] = ultimo
+        
+        minimo = float('inf')
+        elegido = None
+        for v in Q:
+            if D[v] < minimo:
+                minimo = D[v]
+                elegido = v
+        ultimo = elegido
+        Q.remove(ultimo)
+        S.add(ultimo)
+        nodosVisitados.add(ultimo)
+        aristasVisitadas.add((P[ultimo],ultimo))
 
 
         # TODO:Aquí debe completarse el algoritmo de Dijkstra sobre la base 
         # de la diapositiva 49 del tema 1
-        # NOTA: D es una lista y no un diccionario, ese cambio para la siguiente
-        # versión
 
                     
     # Aquí ya ha salido del bucle
