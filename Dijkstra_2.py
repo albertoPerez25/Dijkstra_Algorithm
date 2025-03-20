@@ -582,6 +582,8 @@ class dicPrioridad:
         self.vector[indice] = item
         valor_nuevo = self.vector[indice][1] # guarda el valor nuevo
 
+        self.up_heapify(indice)
+        return
         # Compara el valor nuevo con el valor anterior
         if valor_nuevo > valor_anterior:
             # Si el valor nuevo es mayor, usa up_heapify
@@ -611,6 +613,8 @@ class dicPrioridad:
         # Se saca la posición del padre
         padre = self.nodopadre(indice)
         # Si el nodo tiene padre, y su valor es menor que el del padre
+        self.up_heapify(indice)
+        return
         if padre>0 and self.vector[indice][1]<self.vector[padre][1]:
             # Hace intercambio para arriba
             self.up_heapify(indice)
@@ -764,8 +768,8 @@ def test():
         print(dp['X'])
         #print(dp.vector, " | ",dp.diccionario)
 
-test()   
-#xit()
+#test()   
+#exit()
 
 
 # Algoritmo 2
@@ -790,6 +794,7 @@ def dijkstra2(origen,destino):
         DP.inserta((v,float('inf')))
     
     DP.actualiza((origen,0))
+    #print(DP.extrae_min())
     S.add(origen)
     ultimo = origen
 
