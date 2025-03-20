@@ -504,7 +504,8 @@ for i in ciudades:
             # Los tramos de autovía los consideramos a 120 km/h
 
 
-#
+###########################################################################################
+###########################################################################################
 # Esta clase implementa un diccionario de prioridad
 #
 class dicPrioridad:
@@ -520,7 +521,7 @@ class dicPrioridad:
             item = (elemento, valor)
             self.inserta(item)
  
-    # Inserta un elemento
+   # Inserta un elemento
     def inserta(self, item):
         # Lo añade al final
         self.vector.append(item)
@@ -529,17 +530,52 @@ class dicPrioridad:
         #
         #  TODO:COMPLETAR
         #
-    
+        
+        # Obtiene el indice del nuevo elemento
+        indice = self.tamano - 1
+
+        # Llama a up_heapify para restaurar la propiedad del heap
+        self.up_heapify(indice)
+
+        # Actualiza el diccionario para mantener la correspondencia entre los elementos y sus indices.
+        self.diccionario[item[0]] = indice
+
+        #for i in range(self.tamano,-1,-1): 
+        #indice = self.up_heapify(self.tamano)
+        #self.diccionario[item[0]] = indice
+        #print(self.vector)
+
     # Extrae el elemento mínimo del diccionario de prioridad
     def extrae_min(self):
         # Si el tamaño es 0, no devuelve nada
-        if self.tamano == 0:
+        if self.tamano <= 0:
             return None
         #
         #  TODO:COMPLETAR
         #
-     
-        return self.vector.pop()
+        # Guarda el elemento mínimo (raíz)
+        #print(self.vector,self.tamano)
+        min_elemento = self.vector[0]
+
+        # Reemplaza la raíz con el último elemento
+        ultimo_elemento = self.vector.pop()
+        self.tamano -= 1
+
+        if self.tamano > 0: # Si hay elementos en el heap.
+            self.vector[0] = ultimo_elemento
+            # Restaura la propiedad del heap
+            self.down_heapify(0)
+        else:
+            self.vector = [] # Si solo habia un elemento, ahora el vector queda vacio.
+
+        # Actualiza el diccionario
+        del self.diccionario[min_elemento[0]]
+
+        return min_elemento
+        #del(self.diccionario[self.vector[0][0]]) # quizas es 0 en vez de tamano
+        #self.tamano -= 1
+        #self.up_heapify(self.tamano)
+        #return self.vector.pop(0)
 
     # Actualiza el valor de un elemento 
     def actualiza(self, item):
@@ -551,6 +587,19 @@ class dicPrioridad:
         #
         #  TODO:COMPLETAR
         #
+        # Se actualiza el elemento        
+        valor_anterior = self.vector[indice][1] # guarda el valor anterior
+        self.vector[indice] = item
+        valor_nuevo = self.vector[indice][1] # guarda el valor nuevo
+
+        # Compara el valor nuevo con el valor anterior
+        if valor_nuevo > valor_anterior:
+            # Si el valor nuevo es mayor, usa up_heapify
+            self.up_heapify(indice)
+        elif valor_nuevo < valor_anterior:
+            # Si el valor nuevo es menor, usa down_heapify
+            self.down_heapify(indice)
+            
             
     # Borra un elemento de la cola
     # No haremos uso de esta función
@@ -581,20 +630,25 @@ class dicPrioridad:
             self.down_heapify(indice)        
         
     # Reordena el diccionario de prioridad hacia arriba a partir del elemento
-    # almacenado en la posicion indice
+    # almacenado en la posicion indice (Ordena de mayor a menor, siendo el menor el que quedaria en la cabeza sin tener hijo)
     def up_heapify(self,indice):
+        #print(f"up_heapify called with index: {indice}")
         # Si es la raíz del árbol, no hace nada.
         if indice == 0: 
+            #print(f"{indice} its root, exit.")
             return
         # Saca el padre
         padre = self.nodopadre(indice)
+        #print(f"Parent index: {padre}")
         # Si el valor del índice es mayor que el del padre
         # se cumple la propiedad.  
         if (self.vector[indice][1]>=self.vector[padre][1]): 
-            return 
+            #print(f'{self.vector[indice][1]} >= {self.vector[padre][1]}')
+            return indice
         # Si no, hace el intercambio, y llama a la función 
         # recursiva con el padre.     
         else: 
+            #print(f"Swapping elements at indices {padre} and {indice}")
             self.cambia_elementos(padre, indice)
             self.up_heapify(padre)
             return
@@ -649,7 +703,7 @@ class dicPrioridad:
     def hijo_izquierdo(self,indice): 
         return 2*indice+1
     
-    # Devuelve la posición del hijo izquierdo del elemento almacenado en la 
+    # Devuelve la posición del hijo derecho del elemento almacenado en la 
     # posición indice del vector        
     def hijo_derecho(self,indice): 
         return 2*indice+2  
@@ -673,6 +727,7 @@ class dicPrioridad:
     # Si dp es un diccionario de prioridad, se puede utilizar 'dp[elemento]'
     def __getitem__(self,elemento):
         indice = self.diccionario[elemento]
+        #print(self.diccionario," | ",indice," | ",elemento)
         return self.vector[indice][1]   
     
     # Devuelve True si el diccionario contiene el elemento.
@@ -687,11 +742,15 @@ class dicPrioridad:
             self.actualiza((elemento, valor))  
         else:
             self.inserta((elemento, valor))
+        print(self.vector, " | ",self.diccionario)
         
     # Esta función permite actualizar directamente el valor de un elemento
     # Si dp es un diccionario de prioridad, se puede hacer 'del dp[elemento]'        
     def __delitem__(self,elemento):      
         self.borra(elemento)  
+
+###########################################################################################
+###########################################################################################                
                 
 # Esta función permite comprobar el funcionamiento del diccionario de prioridad.        
 def test():
@@ -711,7 +770,7 @@ def test():
         print(dp['X'])
 
 test()   
-
+exit(0)
 
 # Algoritmo 2
 # Esta función debe implementar el algoritmo de Dijkstra con diccionario de prioridad
