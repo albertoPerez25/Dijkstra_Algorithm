@@ -13,6 +13,7 @@ import time
 import os
 import pandas as pd
 from time import time
+from geopy.distance import geodesic
 
 
 pueblos = {
@@ -482,7 +483,7 @@ for i in ciudades:
     ).add_to(salida)
     
     
-salida
+#salida
 
 
 # Preparar el grafo
@@ -503,6 +504,231 @@ for i in ciudades:
             dist[(j,i)] = dicAutovias[elem]/120     
             # Los tramos de autovía los consideramos a 120 km/h
 
+###########################################################################################
+###########################################################################################
+# Esta clase implementa un diccionario de prioridad
+#
+class dicPrioridad:
+    
+    # Constructor. Opcionalmente toma una lista de pares
+    # (elemento,valor)
+    def __init__(self,objetos=[]):
+        self.diccionario = {}
+        self.vector = [ ]
+        self.tamano = -1 # Realmente es el índice del último elemento.
+        # Se insertan de uno en uno los objetos.
+        for (elemento,valor) in objetos:
+            item = (elemento, valor)
+            self.inserta(item)
+ 
+   # Inserta un elemento
+    def inserta(self, item):
+        # Lo añade al final
+        self.vector.append(item)
+        self.tamano += 1
+        
+        #
+        #  TODO:COMPLETAR
+        #
+        
+        # Obtiene el indice del nuevo elemento
+        indice = self.tamano
+
+        # Llama a up_heapify para restaurar la propiedad del heap
+        self.up_heapify(indice)
+
+        #print(self.vector, " | ",self.diccionario)
+
+    # Extrae el elemento mínimo del diccionario de prioridad
+    def extrae_min(self):
+        # Si el tamaño es 0, no devuelve nada
+        if self.tamano <= 0:
+            return None
+        #
+        #  TODO:COMPLETAR
+        #
+        # Guarda el elemento mínimo (raíz)
+        min_elemento = self.vector[0]
+
+        # Reemplaza la raíz con el último elemento
+        ultimo_elemento = self.vector.pop()
+        self.tamano -= 1
+
+        if self.tamano > 0: # Si hay elementos en el heap.
+            self.vector[0] = ultimo_elemento
+            # Restaura la propiedad del heap
+            self.down_heapify(0)
+        else:
+            self.vector = [] # Si solo habia un elemento, ahora el vector queda vacio.
+
+        # Actualiza el diccionario
+        del self.diccionario[min_elemento[0]]
+        #print(self.vector, " | ",self.diccionario)
+
+        return min_elemento
+
+    # Actualiza el valor de un elemento 
+    def actualiza(self, item):
+        # Posición del elemento que se va a modificar
+        indice = self.diccionario[item[0]]
+        # Se actualiza el elemento        
+        self.vector[indice] = item
+
+        #
+        #  TODO:COMPLETAR
+        #
+        # Se actualiza el elemento        
+        valor_anterior = self.vector[indice][1] # guarda el valor anterior
+        self.vector[indice] = item
+        valor_nuevo = self.vector[indice][1] # guarda el valor nuevo
+
+        self.up_heapify(indice)
+        return      
+            
+    # Borra un elemento de la cola
+    # No haremos uso de esta función
+    def borra(self, elemento):
+        # Si el elemento no está en el diccionario, vuelve
+        if elemento not in self.diccionario:
+            return
+        # Índice del elemento
+        indice = self.diccionario[elemento]
+        # Lo intercambiamos con el último
+        self.cambia_elementos(indice, self.tamano)
+  
+        # Borra el diccionario y del vector
+        del(self.diccionario[elemento])
+        del(self.vector[self.tamano])
+        # Decrece el tamaño
+        self.tamano -= 1        
+        # Se arregla el heap
+        # Se saca la posición del padre
+        padre = self.nodopadre(indice)
+        # Si el nodo tiene padre, y su valor es menor que el del padre
+        self.up_heapify(indice)
+        return     
+        
+    # Reordena el diccionario de prioridad hacia arriba a partir del elemento
+    # almacenado en la posicion indice (Ordena de mayor a menor, siendo el menor el que quedaria en la cabeza sin tener hijo)
+    def up_heapify(self,indice):
+        #print(f"up_heapify called with index: {indice}")
+        # Si es la raíz del árbol, no hace nada.
+        if indice == 0: 
+            self.diccionario[self.vector[indice][0]] = indice
+            return
+        # Saca el padre
+        padre = self.nodopadre(indice)
+
+        # Si el valor del índice es mayor que el del padre
+        # se cumple la propiedad.  
+        if (self.vector[indice][1]>=self.vector[padre][1]): 
+            # Metemos el valor en el diccionario
+            self.diccionario[self.vector[indice][0]] = indice
+            return indice
+        # Si no, hace el intercambio, y llama a la función 
+        # recursiva con el padre.     
+        else: 
+            self.cambia_elementos(padre, indice)
+            self.up_heapify(padre)
+            return
+    
+    # Reordena el diccionario de prioridad hacia abajo a partir del elemento
+    # almacenado en la posicion indice
+    def down_heapify(self,indice):
+        # Extrae los índices de los hijos.
+        hijoIz = self.hijo_izquierdo(indice)
+        hijoDe = self.hijo_derecho(indice)
+        
+        # Si el índice del hijo izquierdo es mayor que el tamaño es que
+        # no tiene hijos, y vuelve.
+        if hijoIz>self.tamano:
+            return
+        # Si no tiene hijo derecho, o el valor del hijo izquierdo es menor, entonces
+        # el hijo a considerar es el izquierdo
+        if hijoDe>self.tamano or (self.vector[hijoIz][1] < self.vector[hijoDe][1]):
+            hijo = hijoIz
+        # Si tiene hijo derecho y el hijo izquierdo no es menor, entonces utiliza el
+        # derecho.    
+        else:
+            hijo = hijoDe
+        
+        # Si el valor del hijo es menor que el del padre
+        # intercambia y llama a la función recursiva con el hijo.
+        if self.vector[hijo][1] < self.vector[indice][1]:
+            self.cambia_elementos(indice, hijo)
+            self.down_heapify(hijo)
+            return
+   
+    
+    # Intercambia dos elementos (han de ser padre e hijo)
+    def cambia_elementos(self, nodo1, nodo2):
+        # Cambia los valores en el diccionario. 
+        self.diccionario[self.vector[nodo1][0]] = nodo2
+        self.diccionario[self.vector[nodo2][0]] = nodo1
+        # Cambia los valores en el vector
+        self.vector[nodo2],self.vector[nodo1] = self.vector[nodo1],self.vector[nodo2]        
+       
+         
+    # Devuelve la posición del padre del elemento almacenado en la posición
+    # indice del vector    
+    def nodopadre(self,indice):    
+        if (indice%2==0):  
+            return int((indice-2) / 2) # Hijo derecho
+        else:  
+            return int((indice-1) / 2) # Hijo izquierdo
+    
+    # Devuelve la posición del hijo izquierdo del elemento almacenado en la 
+    # posición indice del vector        
+    def hijo_izquierdo(self,indice): 
+        return 2*indice+1
+    
+    # Devuelve la posición del hijo derecho del elemento almacenado en la 
+    # posición indice del vector        
+    def hijo_derecho(self,indice): 
+        return 2*indice+2  
+      
+    # Devuelve True si el elemento almacenado en la posición indice es una 
+    # hoja del árbol.  
+    def es_hoja(self,indice): 
+        return (self.__hijo_izquierdo(indice) >= self.tamano) and (self.__hijo_derecho(indice) >= self.tamano)
+    
+    # Devuelve True si el elemento almacenado en la posición indice tiene
+    # solamente un hijo.
+    
+    def un_hijo(self,indice): 
+        return (self.__hijo_izquierdo(indice) < self.tamano) and (self.__hijo_derecho(indice) >= self.tamano)
+        
+        
+    # Con estas funciones se premite llamar al diccionario de prioridad como a cualquier
+    # otra secuencia    
+        
+    # Devuelve el valor de un elemento
+    # Si dp es un diccionario de prioridad, se puede utilizar 'dp[elemento]'
+    def __getitem__(self,elemento):
+        indice = self.diccionario[elemento]
+        #print(self.diccionario," | ",indice," | ",elemento)
+        return self.vector[indice][1]   
+    
+    # Devuelve True si el diccionario contiene el elemento.
+    # Si dp es un diccionario de prioridad, se puede usar 'elemento in dp'
+    def __contains__(self,elemento):  
+        return elemento in self.diccionario   
+    
+    # Esta función permite actualizar directamente el valor de un elemento
+    # Si dp es un diccionario de prioridad, se puede hacer 'dp[elemento]=valor'
+    def __setitem__(self, elemento, valor):
+        if elemento in self.diccionario:
+            self.actualiza((elemento, valor))  
+        else:
+            self.inserta((elemento, valor))
+        
+    # Esta función permite actualizar directamente el valor de un elemento
+    # Si dp es un diccionario de prioridad, se puede hacer 'del dp[elemento]'        
+    def __delitem__(self,elemento):      
+        self.borra(elemento)  
+
+###########################################################################################
+###########################################################################################  
 
 # Algoritmo 3
 # Esta función debe implementar el algoritmo de Dijkstra con diccionario de prioridad y distancia euclídea
@@ -523,8 +749,15 @@ def dijkstra3(origen,destino):
     camino = []
     TiempoViaje = 0  # Distancia al origen
       
+    # Inicialización de distancias a infinito
+    for v in ciudades:
+        DP.inserta((v,float('inf')))
+        EU[v] = geodesic((ciudades[origen][0], ciudades[origen][1]), (ciudades[v][0], ciudades[v][1])).km/120
+
     S.add(origen)
     ultimo = origen
+    distanciaAnterior = 0
+#distancia = geodesic((ciudades['Albacete'][0], ciudades['Albacete'][1]), (ciudades['Madrid'][0], ciudades['Madrid'][1]))
 
     while ultimo!=destino:            
     # Extrae los nuevos candidatos
@@ -532,10 +765,15 @@ def dijkstra3(origen,destino):
 
         # print(busca) (Descomentar para ver el formato de la lista de sucesores)
 
-        # TODO:Aquí debe completarse el algoritmo de Dijkstra sobre la base 
-        # de la diapositiva 49 del tema 1
+        # TODO:
         # NOTA: DP es lista de prioridad y debe completarse con la distancia euclidea
-                    
+        for v in busca:
+            if v not in S:
+                Q.add(v)
+                if distanciaAnterior + dist[ultimo,v] + EU[v] < DP[v]:
+                    DP.actualiza((v,distanciaAnterior + dist[ultimo,v] + EU[v]))
+                    P[v] = ultimo
+
     # Aquí ya ha salido del bucle   
         #
         # Busca el mejor candidato 
@@ -545,6 +783,8 @@ def dijkstra3(origen,destino):
         #
         item = DP.extrae_min()
         ultimo = item[0]
+        distanciaAnterior = item[1]
+        
         TiempoViaje = item[1]
         # La distancia al último tiene que restar la euclídea
         TiempoViaje=TiempoViaje-EU[ultimo]
