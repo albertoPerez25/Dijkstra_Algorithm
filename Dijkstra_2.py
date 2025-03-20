@@ -793,34 +793,38 @@ def dijkstra2(origen,destino):
     for v in ciudades:
         DP.inserta((v,float('inf')))
     
-    DP.actualiza((origen,0))
+
     #print(DP.extrae_min())
     S.add(origen)
     ultimo = origen
+    distanciaAnterior = 0
 
-    while ultimo!=destino:            
+    while ultimo!=destino:
     # Extrae los nuevos candidatos
         busca = [v for (u,v) in edges if u==ultimo]
 
         for v in busca:
             if v not in S:
                 Q.add(v)
-                if DP[ultimo] + dist[ultimo,v] < DP[v]:
-                    DP.actualiza((v,DP[ultimo] + dist[ultimo,v]))
+                if distanciaAnterior + dist[ultimo,v] < DP[v]:
+                    DP.actualiza((v,distanciaAnterior + dist[ultimo,v]))
                     P[v] = ultimo
 
         # Aquí ya ha salido del bucle
         # Busca el mejor candidato 
         # Esta acción es logarítmica en el tamaño de Q
         #
-        # item = (ultimo,distancia)  
+        # item = (ultimo,distancia)
         #
 
-        
 
         item = DP.extrae_min()
+
         ultimo = item[0]
+        distanciaAnterior = item[1]
         TiempoViaje = item[1]
+
+        print(ultimo)
 
         Q.remove(ultimo)
         S.add(ultimo)
