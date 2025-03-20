@@ -625,6 +625,7 @@ class dicPrioridad:
         #print(f"up_heapify called with index: {indice}")
         # Si es la raíz del árbol, no hace nada.
         if indice == 0: 
+            self.diccionario[self.vector[indice][0]] = indice
             return
         # Saca el padre
         padre = self.nodopadre(indice)
@@ -764,7 +765,8 @@ def test():
         #print(dp.vector, " | ",dp.diccionario)
 
 test()   
-exit(0)
+#xit()
+
 
 # Algoritmo 2
 # Esta función debe implementar el algoritmo de Dijkstra con diccionario de prioridad
@@ -783,7 +785,11 @@ def dijkstra2(origen,destino):
     aristasVisitadas = set([])
     camino = []
     TiempoViaje = 0  # Distancia al origen
-      
+
+    for v in ciudades:
+        DP.inserta((v,float('inf')))
+    
+    DP.actualiza((origen,0))
     S.add(origen)
     ultimo = origen
 
@@ -791,25 +797,31 @@ def dijkstra2(origen,destino):
     # Extrae los nuevos candidatos
         busca = [v for (u,v) in edges if u==ultimo]
 
-        # print(busca) (Descomentar para ver el formato de la lista de sucesores)
+        for v in busca:
+            if v not in S:
+                Q.add(v)
+                if DP[ultimo] + dist[ultimo,v] < DP[v]:
+                    DP.actualiza((v,DP[ultimo] + dist[ultimo,v]))
+                    P[v] = ultimo
 
-        # TODO:Aquí debe completarse el algoritmo de Dijkstra sobre la base 
-        # de la diapositiva 49 del tema 1
-        # NOTA: Ahoa DP es un lista con prioridad
-                    
-    # Aquí ya ha salido del bucle
+        # Aquí ya ha salido del bucle
         # Busca el mejor candidato 
         # Esta acción es logarítmica en el tamaño de Q
         #
         # item = (ultimo,distancia)  
         #
+
+        
+
         item = DP.extrae_min()
         ultimo = item[0]
         TiempoViaje = item[1]
-   
-        # Lo incorpora
+
         Q.remove(ultimo)
         S.add(ultimo)
+   
+        nodosVisitados.add(ultimo)
+        aristasVisitadas.add((P[ultimo],ultimo))
                     
     # Aquí ya ha salido del bucle
     # TiempoViaje se mantiene como la distancia al último
