@@ -532,18 +532,12 @@ class dicPrioridad:
         #
         
         # Obtiene el indice del nuevo elemento
-        indice = self.tamano - 1
+        indice = self.tamano
 
         # Llama a up_heapify para restaurar la propiedad del heap
         self.up_heapify(indice)
 
-        # Actualiza el diccionario para mantener la correspondencia entre los elementos y sus indices.
-        self.diccionario[item[0]] = indice
-
-        #for i in range(self.tamano,-1,-1): 
-        #indice = self.up_heapify(self.tamano)
-        #self.diccionario[item[0]] = indice
-        #print(self.vector)
+        #print(self.vector, " | ",self.diccionario)
 
     # Extrae el elemento mínimo del diccionario de prioridad
     def extrae_min(self):
@@ -554,7 +548,6 @@ class dicPrioridad:
         #  TODO:COMPLETAR
         #
         # Guarda el elemento mínimo (raíz)
-        #print(self.vector,self.tamano)
         min_elemento = self.vector[0]
 
         # Reemplaza la raíz con el último elemento
@@ -570,12 +563,9 @@ class dicPrioridad:
 
         # Actualiza el diccionario
         del self.diccionario[min_elemento[0]]
+        #print(self.vector, " | ",self.diccionario)
 
         return min_elemento
-        #del(self.diccionario[self.vector[0][0]]) # quizas es 0 en vez de tamano
-        #self.tamano -= 1
-        #self.up_heapify(self.tamano)
-        #return self.vector.pop(0)
 
     # Actualiza el valor de un elemento 
     def actualiza(self, item):
@@ -635,20 +625,19 @@ class dicPrioridad:
         #print(f"up_heapify called with index: {indice}")
         # Si es la raíz del árbol, no hace nada.
         if indice == 0: 
-            #print(f"{indice} its root, exit.")
             return
         # Saca el padre
         padre = self.nodopadre(indice)
-        #print(f"Parent index: {padre}")
+
         # Si el valor del índice es mayor que el del padre
         # se cumple la propiedad.  
         if (self.vector[indice][1]>=self.vector[padre][1]): 
-            #print(f'{self.vector[indice][1]} >= {self.vector[padre][1]}')
+            # Metemos el valor en el diccionario
+            self.diccionario[self.vector[indice][0]] = indice
             return indice
         # Si no, hace el intercambio, y llama a la función 
         # recursiva con el padre.     
         else: 
-            #print(f"Swapping elements at indices {padre} and {indice}")
             self.cambia_elementos(padre, indice)
             self.up_heapify(padre)
             return
@@ -742,7 +731,6 @@ class dicPrioridad:
             self.actualiza((elemento, valor))  
         else:
             self.inserta((elemento, valor))
-        print(self.vector, " | ",self.diccionario)
         
     # Esta función permite actualizar directamente el valor de un elemento
     # Si dp es un diccionario de prioridad, se puede hacer 'del dp[elemento]'        
@@ -757,17 +745,23 @@ def test():
         L = [('A',6.5), ('B',4.3), ('C',3.7), ('D',5.8), ('E',9.1), ('F',7.2), ('G',7)]       
         # Creamos el diccionario de prioridad con la lista
         dp = dicPrioridad(L)
+        #print(dp.vector, " | ",dp.diccionario)
         print(dp.extrae_min())
+        #print(dp.vector, " | ",dp.diccionario)
         dp.inserta(('H', 1))
         print(dp['F'])
+        #print(dp.vector, " | ",dp.diccionario)
         dp.actualiza(('F',3))
         print(dp['F'])
+        #print(dp.vector, " | ",dp.diccionario)
         print('F' in dp)
         del dp['F']
         print('F' in dp)
         print(dp.extrae_min())
+        #print(dp.vector, " | ",dp.diccionario)
         dp['X'] = 3.14
         print(dp['X'])
+        #print(dp.vector, " | ",dp.diccionario)
 
 test()   
 exit(0)
