@@ -824,7 +824,6 @@ def dijkstra2(origen,destino):
         distanciaAnterior = item[1]
         TiempoViaje = item[1]
 
-        print(ultimo)
 
         Q.remove(ultimo)
         S.add(ultimo)

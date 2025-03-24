@@ -771,7 +771,7 @@ def dijkstra3(origen,destino):
             if v not in S:
                 Q.add(v)
                 if distanciaAnterior + dist[ultimo,v] + EU[v] < DP[v]:
-                    DP.actualiza((v,distanciaAnterior + dist[ultimo,v] + EU[v]))
+                    DP.actualiza((v,distanciaAnterior + dist[ultimo,v]))
                     P[v] = ultimo
 
     # Aquí ya ha salido del bucle   
@@ -792,6 +792,9 @@ def dijkstra3(origen,destino):
         # Lo incorpora
         Q.remove(ultimo)
         S.add(ultimo)
+
+        nodosVisitados.add(ultimo)
+        aristasVisitadas.add((P[ultimo],ultimo))
                     
     # Aquí ya ha salido del bucle
     # TiempoViaje se mantiene como la distancia al último
@@ -867,3 +870,4 @@ for arista in Ans3[3]:
     linea = folium.PolyLine(locations=[ciudades[arista[0]], ciudades[arista[1]]],
                         color='red', weight=5, opacity=0.8).add_to(salida3)    
 salida3
+
